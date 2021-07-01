@@ -95,10 +95,10 @@ def PalabrasFrecuentes(sequence:str, k:int):
  
     return resultado
 
-def cargarfasta(file:str):
+def cargarfasta(file:str) -> dict:
     lines     = list()
     resultado = dict()
-    Sequence  = str()
+    sequence  = str()
     cabecera  = str()
     with open(file) as f:
         lines = f.readlines()
@@ -107,14 +107,14 @@ def cargarfasta(file:str):
         for line in lines:
             #Si la linea comienza con el caracter ">", lo añadira a la variable "cabecera".
             if line.startswith('>'):
-                cabecera = line
-                secuence = "" #Esta linea evita que se guarde la primera secuencia bajo el segundo identificador.
+                cabecera = line[1:].strip()
+                sequence = "" #Esta linea evita que se guarde la primera secuencia bajo el segundo identificador.
             
             #El resto de lineas serán asignadas a la variable secuencia, hasta que se encuentre otra cabecera.
             else:  
-                secuence += line
+                sequence += line
             #Se almacena el resultado en la tabla, asociando a cada cabecera la serie de lineas que le siguen en el fichero FASTA.
-            resultado[cabecera] = secuence
+            resultado[cabecera] = sequence
         
         f.close()
         
